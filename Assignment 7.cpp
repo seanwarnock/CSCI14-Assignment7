@@ -40,7 +40,8 @@ class TheShip
 private :
   const int MinimumPassengers = 0;
   const int MaximumPassengers = 500;
-  const string ShipName = "S.S. Rusty T. Buckette";
+  const string ShipName = "S.S. Rusty T. Buckette"; //"S.S. William F. Warnock";
+
 
   int intMinimumPassengers = MinimumPassengers;
   int intMaximumPassengers = MaximumPassengers;
@@ -89,6 +90,11 @@ public :
     //system
   }
 
+  string PrintShipName()
+  {
+    return ShipName;
+  }
+
   void RunningCostEnter()
   {
     double doublelocalRunningCost;
@@ -131,6 +137,32 @@ public :
     doubleTicketDiscount = doublelocalTicketDiscount;
   }
 
+
+  void CalcProfit()
+  {
+/*
+NP is the Number of Passengers
+TP is the Proposed Ticket Price
+MP is the Minimum Number of Passengers
+
+Cost of Ticket = TP - (((NP - MP) /10) * discount per very 10 passengers)
+Profit = (NP * Cost of Ticket) – fixed cost
+*/
+    //Variables
+    int n;
+    int PassengerIncrement = 10;
+    double doubleIncrementalTicketPrice;
+
+    system("cls");
+    for (n=intMinimumPassengers;n<=intMaximumPassengers;n+=PassengerIncrement)
+    {
+      doubleIncrementalTicketPrice = doubleTicketPrice - ((n - intMinimumPassengers) / PassengerIncrement) * doubleTicketDiscount;
+      cout << "Ticket Price " << doubleIncrementalTicketPrice << " ";
+      cout << "Passenger count " << n << " ";
+      cout << "Profit " << (doubleIncrementalTicketPrice * n) - doubleRunningCost << endl;
+    }
+    system("pause");
+  }
 };
 
 
@@ -160,7 +192,7 @@ void MenuPrint(TheShip localRustyBucket)
     cout << "[4] Enter the ticket price." << endl;
     cout << "[5] Enter Ticket discount amount." << endl;
     cout << "[6] Calculate ticket breakdown." << endl;
-    cout << "[9] Send the S.S. Rust T Bucket to the breakers (exit program)." << endl;
+    cout << "[9] Send the " << localRustyBucket.PrintShipName() << " to the breakers (exit program)." << endl;
 
     cin >> charlocalMenuChoice;
 
@@ -188,7 +220,7 @@ void MenuPrint(TheShip localRustyBucket)
       break;
     case '6' :
       cout << "Choice 6";
-      system("pause");
+      localRustyBucket.CalcProfit();
       break;
     case '9' :
       cout << "Welcome to Rosyth Scotland" << endl;

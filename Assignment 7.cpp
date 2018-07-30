@@ -22,6 +22,7 @@ https://github.com/seanwarnock/CSCI14-Assignment7.git
 //#include <time.h>
 #include <iostream>
 #include <string>
+#include <iomanip>
 #ifdef _WIN32
   #include <windows.h>
 #endif
@@ -80,13 +81,18 @@ public :
 
   void Print()
   {
+    cout.unsetf(ios::floatfield);
+    cout.precision(2);
+    cout.setf(ios::fixed, ios::floatfield);
+    cout.setf(ios::showpoint);
+
     system("cls");
     cout << ShipName << endl;
     cout << "Current minimum passengers : " << intMinimumPassengers << endl;
     cout << "Current maximum passengers : " << intMaximumPassengers << endl;
-    cout << "Current running cost of the ship : " << doubleRunningCost << endl;
-    cout << "Current ticket price : " << doubleTicketPrice << endl;
-    cout << "Current ticket discount : " << doubleTicketDiscount << endl;
+    cout << "Current running cost of the ship : $" << doubleRunningCost << endl;
+    cout << "Current ticket price : $" << doubleTicketPrice << endl;
+    cout << "Current ticket discount : $" << doubleTicketDiscount << endl;
     //system
   }
 
@@ -152,14 +158,60 @@ Profit = (NP * Cost of Ticket) – fixed cost
     int n;
     int PassengerIncrement = 10;
     double doubleIncrementalTicketPrice;
+    double doubleIncrementalProfit;
+
+    double doubleBestTicketPrice = 0;
+    double doubleBestProfit = 0;
+    int intBestPassengerCount = 0;
 
     system("cls");
-    for (n=intMinimumPassengers;n<=intMaximumPassengers;n+=PassengerIncrement)
+
+    cout.unsetf(ios::floatfield);
+    cout.precision(2);
+    cout.setf(ios::fixed, ios::floatfield);
+    cout.setf(ios::showpoint);
+
+
+    cout << setw(12) << "Passengers" << setw(14) << "Ticket Price" << setw(14) << "Gross Profit" << setw(8) << "COGS" << setw(12) << "Net Profit" << endl;
+
+    n=intMinimumPassengers;
+
+    while ((n <= intMaximumPassengers) && (doubleIncrementalTicketPrice > 0))
+    //for (n=intMinimumPassengers;n<=intMaximumPassengers;n+=PassengerIncrement)
     {
+
       doubleIncrementalTicketPrice = doubleTicketPrice - ((n - intMinimumPassengers) / PassengerIncrement) * doubleTicketDiscount;
-      cout << "Ticket Price " << doubleIncrementalTicketPrice << " ";
-      cout << "Passenger count " << n << " ";
-      cout << "Profit " << (doubleIncrementalTicketPrice * n) - doubleRunningCost << endl;
+      doubleIncrementalProfit = (doubleIncrementalTicketPrice * n) - doubleRunningCost;
+
+      cout << setw(12) << n << setw(14) << doubleIncrementalTicketPrice << setw(14) << (doubleIncrementalTicketPrice * n) << setw(8) << doubleRunningCost << setw(12) << doubleIncrementalProfit << endl;
+
+      //Max profit find.
+      if (doubleIncrementalProfit > doubleBestProfit)
+      {
+        doubleBestProfit = doubleIncrementalProfit;
+        doubleBestTicketPrice = doubleIncrementalTicketPrice;
+        intBestPassengerCount = n;
+      }
+
+      //Account for less than ten repaining apssengers.
+      if (((intMaximumPassengers - n) < 10) && ((intMaximumPassengers - n) != 0))
+      {
+        n = n + (intMaximumPassengers - n);
+      }
+      else
+      {
+        n++ ; //=PassengerIncrement;
+      }
+    }
+    if (doubleBestProfit == 0)
+    {
+      cout << "This voyage is never profitable, do not leave port." << endl;
+    }
+    else
+    {
+      cout << "Best profit : $" << doubleBestProfit << endl;
+      cout << "at ticket price: $" << doubleBestTicketPrice << endl;
+      cout << "and at " << intBestPassengerCount << " passengers."<< endl;
     }
     system("pause");
   }

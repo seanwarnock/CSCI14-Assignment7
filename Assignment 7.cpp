@@ -11,8 +11,8 @@ https://github.com/seanwarnock/CSCI14-Assignment7.git
 2.	Ask the user to enter a maximum number of passengers. The Coast Guard has rated this dinner cruise ship at no more than 500 passengers excluding crew. Minimum has to be at least one passenger (i.e. 1 to 500)
 3.	Ask the user to enter the fixed cost for the cruise (i.e. $2,000, $2,500, $3,550, etc.)
 4.	Ask the user to enter a discount per ticket per every group of 10 passengers (i.e. 0.10, 0.25, 0.50, etc.)
-5.	Check that the minimum number of passengers is not greater than the user’s maximum passengers.
-6.	Check that the maximum is not more than the ship’s maximum carrying capacity for passengers (same for the minimum)
+5.	Check that the minimum number of passengers is not greater than the userâ€™s maximum passengers.
+6.	Check that the maximum is not more than the shipâ€™s maximum carrying capacity for passengers (same for the minimum)
 7.	Determine the maximum PROFIT, the number of passengers needed to generate that profit, and the ticket price that will generate that profit.
 8.	User can execute this any number of times. Logic should ask user if they wish to quit or continue running this application. You will be using some sort of loop to repeat the application possibly multiple times.
 */
@@ -88,11 +88,11 @@ public :
 
     system("cls");
     cout << ShipName << endl;
-    cout << "Current minimum passengers : " << intMinimumPassengers << endl;
-    cout << "Current maximum passengers : " << intMaximumPassengers << endl;
-    cout << "Current running cost of the ship : $" << doubleRunningCost << endl;
-    cout << "Current ticket price : $" << doubleTicketPrice << endl;
-    cout << "Current ticket discount : $" << doubleTicketDiscount << endl;
+    cout << setw(40) << left << "Current minimum passengers : " << intMinimumPassengers << endl;
+    cout << setw(40) << "Current maximum passengers : " << intMaximumPassengers << endl;
+    cout << setw(40) << "Current running cost of the ship : " << "$" << doubleRunningCost << endl;
+    cout << setw(40) << "Current ticket price : " << "$" << doubleTicketPrice << endl;
+    cout << setw(40) << "Current ticket discount : " << "$" << doubleTicketDiscount << endl;
     //system
   }
 
@@ -145,78 +145,56 @@ public :
 
 
   void CalcProfit()
-  {
+ {
 /*
 NP is the Number of Passengers
 TP is the Proposed Ticket Price
 MP is the Minimum Number of Passengers
 
 Cost of Ticket = TP - (((NP - MP) /10) * discount per very 10 passengers)
-Profit = (NP * Cost of Ticket) – fixed cost
+Profit = (NP * Cost of Ticket) ï¿½ fixed cost
 */
     //Variables
     int n;
     int PassengerIncrement = 10;
     double doubleIncrementalTicketPrice;
     double doubleIncrementalProfit;
-
     double doubleBestTicketPrice = 0;
     double doubleBestProfit = 0;
     int intBestPassengerCount = 0;
 
+
     system("cls");
-
-    cout.unsetf(ios::floatfield);
-    cout.precision(2);
-    cout.setf(ios::fixed, ios::floatfield);
-    cout.setf(ios::showpoint);
-
-
-    cout << setw(12) << "Passengers" << setw(14) << "Ticket Price" << setw(14) << "Gross Profit" << setw(8) << "COGS" << setw(12) << "Net Profit" << endl;
-
-    n=intMinimumPassengers;
-
-    while ((n <= intMaximumPassengers) && (doubleIncrementalTicketPrice > 0))
-    //for (n=intMinimumPassengers;n<=intMaximumPassengers;n+=PassengerIncrement)
+    for (n=intMinimumPassengers;n<=intMaximumPassengers;n+=PassengerIncrement)
     {
-
       doubleIncrementalTicketPrice = doubleTicketPrice - ((n - intMinimumPassengers) / PassengerIncrement) * doubleTicketDiscount;
       doubleIncrementalProfit = (doubleIncrementalTicketPrice * n) - doubleRunningCost;
+      cout << "Ticket Price " << doubleIncrementalTicketPrice << " ";
+      cout << "between " << n << " passengers to " << n + 9 << " passengers. ";
+      cout << "Profit $" << doubleIncrementalProfit << endl;
 
-      cout << setw(12) << n << setw(14) << doubleIncrementalTicketPrice << setw(14) << (doubleIncrementalTicketPrice * n) << setw(8) << doubleRunningCost << setw(12) << doubleIncrementalProfit << endl;
-
-      //Max profit find.
       if (doubleIncrementalProfit > doubleBestProfit)
       {
         doubleBestProfit = doubleIncrementalProfit;
         doubleBestTicketPrice = doubleIncrementalTicketPrice;
         intBestPassengerCount = n;
       }
-
-      //Account for less than ten repaining apssengers.
-      if (((intMaximumPassengers - n) < 10) && ((intMaximumPassengers - n) != 0))
-      {
-        n = n + (intMaximumPassengers - n);
-      }
-      else
-      {
-        n++ ; //=PassengerIncrement;
-      }
     }
+
     if (doubleBestProfit == 0)
     {
       cout << "This voyage is never profitable, do not leave port." << endl;
     }
     else
     {
-      cout << "Best profit : $" << doubleBestProfit << endl;
-      cout << "at ticket price: $" << doubleBestTicketPrice << endl;
-      cout << "and at " << intBestPassengerCount << " passengers."<< endl;
+      cout << endl'
+      cout << "Best profit achieved is: $" << doubleBestProfit << " with between " << intBestPassengerCount << " to " << intBestPassengerCount + 9 << " passengers," << endl;
+      cout << "with a ticket price of: $" << doubleBestTicketPrice << endl;
+      //cout << "and at " << intBestPassengerCount << " passengers."<< endl;
     }
     system("pause");
   }
 };
-
 
 //Functions
 void ConsoleConfig()

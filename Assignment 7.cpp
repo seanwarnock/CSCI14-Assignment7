@@ -158,7 +158,7 @@ Profit = (NP * Cost of Ticket) � fixed cost
     int n;
     int PassengerIncrement = 10;
     double doubleIncrementalTicketPrice;
-    double doubleIncrementalProfit;
+    double doubleIncrementalProfitLow;
     double doubleBestTicketPrice = 0;
     double doubleBestProfit = 0;
     int intBestPassengerCount = 0;
@@ -169,7 +169,7 @@ Profit = (NP * Cost of Ticket) � fixed cost
     for (n=intMinimumPassengers;n<=intMaximumPassengers;n+=PassengerIncrement)
     {
       doubleIncrementalTicketPrice = doubleTicketPrice - ((n - intMinimumPassengers) / PassengerIncrement) * doubleTicketDiscount;
-      doubleIncrementalProfit = (doubleIncrementalTicketPrice * n) - doubleRunningCost;
+      doubleIncrementalProfitLow = (doubleIncrementalTicketPrice * n) - doubleRunningCost;
       cout << "Ticket Price $" << doubleIncrementalTicketPrice << " ";
       cout << "between " << n << " passengers to ";
 
@@ -181,11 +181,11 @@ Profit = (NP * Cost of Ticket) � fixed cost
       {
         cout <<  (n + 9) << " passengers. ";
       }
-      cout << "Profit $" << doubleIncrementalProfit << endl;
+      cout << "Profit $" << doubleIncrementalProfitLow << endl;
 
-      if (doubleIncrementalProfit > doubleBestProfit)
+      if (doubleIncrementalProfitLow > doubleBestProfit)
       {
-        doubleBestProfit = doubleIncrementalProfit;
+        doubleBestProfit = doubleIncrementalProfitLow;
         doubleBestTicketPrice = doubleIncrementalTicketPrice;
         intBestPassengerCount = n;
       }

@@ -162,6 +162,7 @@ Profit = (NP * Cost of Ticket) � fixed cost
     double doubleBestTicketPrice = 0;
     double doubleBestProfit = 0;
     int intBestPassengerCount = 0;
+//    int intRemainingPassengers;
 
 
     system("cls");
@@ -169,8 +170,17 @@ Profit = (NP * Cost of Ticket) � fixed cost
     {
       doubleIncrementalTicketPrice = doubleTicketPrice - ((n - intMinimumPassengers) / PassengerIncrement) * doubleTicketDiscount;
       doubleIncrementalProfit = (doubleIncrementalTicketPrice * n) - doubleRunningCost;
-      cout << "Ticket Price " << doubleIncrementalTicketPrice << " ";
-      cout << "between " << n << " passengers to " << n + 9 << " passengers. ";
+      cout << "Ticket Price $" << doubleIncrementalTicketPrice << " ";
+      cout << "between " << n << " passengers to ";
+
+      if ((n+9) > intMaximumPassengers)
+      {
+        cout << intMaximumPassengers << " passengers. ";
+      }
+      else
+      {
+        cout <<  (n + 9) << " passengers. ";
+      }
       cout << "Profit $" << doubleIncrementalProfit << endl;
 
       if (doubleIncrementalProfit > doubleBestProfit)
@@ -187,8 +197,18 @@ Profit = (NP * Cost of Ticket) � fixed cost
     }
     else
     {
-      cout << endl'
-      cout << "Best profit achieved is: $" << doubleBestProfit << " with between " << intBestPassengerCount << " to " << intBestPassengerCount + 9 << " passengers," << endl;
+      cout << endl;
+      cout << "Best profit achieved is: $" << doubleBestProfit << " with between " << intBestPassengerCount << " to ";
+
+      if ((intBestPassengerCount + 9) > intMaximumPassengers)
+      {
+        cout  << intMaximumPassengers << " passengers," << endl;
+      }
+      else
+      {
+        cout  << intBestPassengerCount + 9 << " passengers," << endl;
+      }
+
       cout << "with a ticket price of: $" << doubleBestTicketPrice << endl;
       //cout << "and at " << intBestPassengerCount << " passengers."<< endl;
     }
